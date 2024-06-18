@@ -6,7 +6,7 @@
 #    By: nromito <nromito@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/12 10:08:24 by nromito           #+#    #+#              #
-#    Updated: 2024/06/12 14:11:14 by nromito          ###   ########.fr        #
+#    Updated: 2024/06/18 11:31:02 by nromito          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRCS = philo.c
 
 OBJS = ${SRCS:.c=.o}
 
-COMPILE = cc -Wall -Wextra -Werror -g
+COMPILE = cc -Wall -Wextra -Werror -pthread -g
 
 RED = "\033[1;31m"
 GREEN = "\033[1;32m"
@@ -39,13 +39,13 @@ all: ${NAME}
 ${NAME}: ${OBJS} ${HEADER}
 		make -C ${LIBFT_PATH}
 		$(COMPILE) $(OBJS) -o $(NAME) $(LIBFT) -lreadline
-		@echo $(MAGENTA) "  ____  _   _  _  _      _____" $(NONE)
-		@echo $(RED)    " |  _ \| | | || || |    |  _  |" $(NONE)
-		@echo $(YELLOW) " | |_)|| |_| || || |    | | | |" $(NONE)
-		@echo $(GREEN)  " |  __/| |_| || || |    | | | |" $(NONE)
-		@echo $(CYAN)   " | |   | | | || || |___ | |_| |" $(NONE)
-		@echo $(BLUE)   " |_|   |_| |_||_||_____||_____|" $(NONE)
-		@echo $(WHITE)  "                               " $(NONE)
+		@echo $(MAGENTA) "  ____  _   _  _  _      _____  " $(NONE)
+		@echo $(RED)    " |  _ \| | | || || |    |  _  | " $(NONE)
+		@echo $(YELLOW) " | |_)|| |_| || || |    | | | | " $(NONE)
+		@echo $(GREEN)  " |  __/| |_| || || |    | | | | " $(NONE)
+		@echo $(CYAN)   " | |   | | | || || |___ | |_| | " $(NONE)
+		@echo $(BLUE)   " |_|   |_| |_||_||_____||_____| " $(NONE)
+		@echo $(WHITE)  "                                " $(NONE)
 
 clean:
 		@rm -rf $(OBJS)
