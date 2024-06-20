@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 19:12:56 by ciusca            #+#    #+#             */
-/*   Updated: 2024/06/03 12:23:02 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/19 15:49:50 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,19 @@ typedef struct s_list
 }					t_list;
 
 /* string functions */
-int		ft_atoi(const char *str);
-char	*ft_strtrim(const char *s1, const char *set);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_strjoin(const char *s1, const char *s2);
-char	*ft_strmapi(const char *s, char (*f)(unsigned int, char));
-char	*ft_strchr(const char *s, int c);
-char	*ft_strdup(const char *s);
-size_t	ft_strlcat(char *dst, const char *src, size_t size);
-size_t	ft_strlcpy(char *dst, const char *src, size_t size);
-size_t	ft_strlen(const char *str);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-char	*ft_strnstr(const char *big, const char *little, size_t len);
-char	*ft_strrchr(const char *s, int c);
+long long		ft_atoi(const char *str);
+char			*ft_strtrim(const char *s1, const char *set);
+char			*ft_substr(char const *s, unsigned int start, size_t len);
+char			*ft_strjoin(const char *s1, const char *s2);
+char			*ft_strmapi(const char *s, char (*f)(unsigned int, char));
+char			*ft_strchr(const char *s, int c);
+char			*ft_strdup(const char *s);
+size_t			ft_strlcat(char *dst, const char *src, size_t size);
+size_t			ft_strlcpy(char *dst, const char *src, size_t size);
+size_t			ft_strlen(const char *str);
+int				ft_strncmp(const char *s1, const char *s2, size_t n);
+char			*ft_strnstr(const char *big, const char *little, size_t len);
+char			*ft_strrchr(const char *s, int c);
 
 /* int functions */
 void	ft_putnbr_fd(int nb, int fd);

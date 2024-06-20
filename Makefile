@@ -6,7 +6,7 @@
 #    By: nromito <nromito@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/12 10:08:24 by nromito           #+#    #+#              #
-#    Updated: 2024/06/18 11:31:02 by nromito          ###   ########.fr        #
+#    Updated: 2024/06/19 16:13:14 by nromito          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ LIBFT_PATH = libft/
 
 HEADERS = header/philo.h
 
-SRCS = philo.c
+SRCS = philo.c src/actions.c src/check_death_and_meal.c src/init.c src/routine.c src/utils.c
 
 OBJS = ${SRCS:.c=.o}
 
@@ -38,7 +38,7 @@ all: ${NAME}
 
 ${NAME}: ${OBJS} ${HEADER}
 		make -C ${LIBFT_PATH}
-		$(COMPILE) $(OBJS) -o $(NAME) $(LIBFT) -lreadline
+		$(COMPILE) $(OBJS) -o $(NAME) $(LIBFT)
 		@echo $(MAGENTA) "  ____  _   _  _  _      _____  " $(NONE)
 		@echo $(RED)    " |  _ \| | | || || |    |  _  | " $(NONE)
 		@echo $(YELLOW) " | |_)|| |_| || || |    | | | | " $(NONE)
@@ -48,16 +48,25 @@ ${NAME}: ${OBJS} ${HEADER}
 		@echo $(WHITE)  "                                " $(NONE)
 
 clean:
-		@rm -rf $(OBJS)
-		@make -C $(LIBFT_PATH) clean
-		@echo $(GREEN)"Successfully cleaned!" $(NONE)
+	@if [ ! -z "$(OBJS)" ] && [ -f $(firstword $(OBJS)) ]; then \
+		rm -rf $(OBJS); \
+		make -C $(LIBFT_PATH) clean; \
+		echo $(GREEN)"Successfully cleaned!" $(NONE); \
+	else \
+		echo $(MAGENTA)"No object files to clean." $(NONE); \
+	fi
 
 fclean: clean
-		@rm -rf $(NAME)
-		@make -C $(LIBFT_PATH) fclean
-		@echo $(CYAN)"Successfully Fcleaned!" $(NONE)
+	@if [ ! -z "$(NAME)" ] && [ -f $(firstword $(NAME)) ]; then \
+		rm -rf $(NAME); \
+		make -C $(LIBFT_PATH) fclean; \
+		echo $(CYAN)"Successfully Fcleaned!" $(NONE); \
+	else \
+		echo $(RED)"No executable to clean." $(NONE); \
+	fi
 
 re: fclean all
 
 .PHONY: all clean fclean
 
+.SILENT:
