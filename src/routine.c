@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 11:36:02 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/20 14:20:55 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/20 18:43:25 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	*philo_routine(void *pointer)
 		think(philo);
 		if (is_not_dead(philo))
 			philo->data->death = 1;
+		// ricordati di dare il tempo a tutti i philo di joinare con usleep di time to die + time to sleep + time to eat
 	}
 	return (pointer);
 }
