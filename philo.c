@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:00:11 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/20 14:21:13 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/24 17:10:12 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,10 @@ int	main(int argc, char **argv)
 	{
 		if (check_args(argv) == 1)
 			return (1);
-		init_program(&data, argv);
-		init_forks(forks, &data);
-		init_philos(philo, &data, forks);
-		create_philos(philo, &data);
-		destroy_all(NULL, philo, &data);
+		init_forks(forks, argv);
+		init_philos(philo, forks, argv, &data);
+		create_philos(philo, forks);
+		destroy_all(NULL, forks, philo);
 	}
 	else
 		return (write(2, "Invalid number of arguments\n", 29), 0);

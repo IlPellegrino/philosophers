@@ -6,20 +6,38 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:54:46 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/20 10:25:07 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/24 17:20:40 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
 
-void	destroy_all(char *str, t_philo *philo, t_data *data)
+void	destroy_forks(t_mutex *forks, t_philo *philo)
 {
-	pthread_mutex_destroy(philo->sx_fork);
-	pthread_mutex_destroy(philo->dx_fork);
-	pthread_mutex_destroy(&data->print);
-	pthread_mutex_destroy(&data->eating);
+	int	i;
+
+	i = -1;
+	while (++i < philo[0].n_philos)
+		pthread_mutex_destroy(&forks[i]);
+}
+
+void	destroy_all(char *str, t_mutex *forks, t_philo *philo)
+{
+	int	i;
+
+	i = -1;
 	if (str)
-		printf("%s", str);
+		ft_putstr_fd(str, 2);
+	while (++i < philo->n_philos)
+	{
+		// pthread_mutex_unlock(philo[i].death);
+		pthread_mutex_destroy(philo[i].death);
+		// pthread_mutex_unlock(philo[i].print);
+		pthread_mutex_destroy(philo[i].print);
+		// pthread_mutex_unlock(philo[i].eating);
+		pthread_mutex_destroy(philo[i].eating);
+	}
+	destroy_forks(forks, philo);
 }
 
 void	print_message(char *str, t_philo *philo, int id)
@@ -27,10 +45,9 @@ void	print_message(char *str, t_philo *philo, int id)
 	size_t	real_time;
 
 	pthread_mutex_lock(philo->print);
-	real_time = get_real_time();
-	real_time -= philo->data->start_time;
-	// if (is_not_dead(philo))
-	printf("%zu %d %s\n", real_time, id, str);
+	real_time = get_real_time() - philo->start_time;
+	if (philo->death_prove == 0)
+		printf("%zu %d %s\n", real_time, id, str);
 	pthread_mutex_unlock(philo->print);
 }
 
