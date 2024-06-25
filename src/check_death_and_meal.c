@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 17:06:01 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/24 17:05:44 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/25 16:39:24 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,32 @@
 
 int	philo_died(t_philo *philo)
 {
-	pthread_mutex_lock(philo->eating);
-	if (get_real_time() - philo->last_meal >= philo->time_to_die
+	pthread_mutex_lock(&philo->eating);
+	if (get_real_time() - philo->last_meal >= philo->data->time_to_die
 			&& philo->is_eating == 0)
-		return (pthread_mutex_unlock(philo->eating), 1);
-	return (pthread_mutex_unlock(philo->eating), 0);
+		return (pthread_mutex_unlock(&philo->eating), 1);
+	return (pthread_mutex_unlock(&philo->eating), 0);
 }
 
-int	is_dead(t_philo *philo)
+int	is_dead(t_philo *philos[MAX_PHILO])
 {
 	int	i;
+	t_data *data;
 
+	data = philos[0]->data;
 	i = -1;
-	while (++i < philo->n_philos)
+	while (++i < data->n_philos)
 	{
-		if (philo_died(&philo[i]))
+		if (philo_died(philos[i]))
 		{
-			print_message("died", &philo[i], philo[i].id);
-			pthread_mutex_lock(philo->death);
-			philo->death_prove = 1;
-			return (pthread_mutex_unlock(philo->death), 1);
+			print_message("died", philos[i], philos[i]->id);
+			pthread_mutex_lock(&data->death);
+			data->death_prove = 1;
+			pthread_mutex_unlock(&data->death);
+			return (1);
 		}
 	}
+	// pthread_mutex_unlock(philo->data->death);
 	return (0);
 }
 
@@ -52,12 +56,10 @@ int	everybody_ate(t_philo *philo)
 
 void	*monitor(void *pointer)
 {
-	t_philo	*philo;
-
-	philo = (t_philo *)pointer;
 	while (1)
 	{
-		if (is_dead(philo) || everybody_ate(philo))
+		// usleep(philo[0].time_to_die);
+		if (is_dead(pointer) || everybody_ate(pointer))
 			break;
 	}
 	return (pointer);

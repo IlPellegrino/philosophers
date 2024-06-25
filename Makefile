@@ -6,7 +6,7 @@
 #    By: nromito <nromito@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/12 10:08:24 by nromito           #+#    #+#              #
-#    Updated: 2024/06/22 16:01:06 by nromito          ###   ########.fr        #
+#    Updated: 2024/06/25 16:40:42 by nromito          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,10 +33,10 @@ WHITE = "\033[1;37m"
 NONE = "\033[0m"
 
 all: ${NAME}
-%.o: %.c
+%.o: %.c ${HEADER}
 		$(COMPILE) -I $(LIBFT_PATH) -c $< -o $@
 
-${NAME}: ${OBJS} ${HEADER}
+${NAME}: ${OBJS}
 		make -C ${LIBFT_PATH}
 		$(COMPILE) $(OBJS) -o $(NAME) $(LIBFT)
 		@echo $(MAGENTA) "  ____  _   _  _  _      _____  " $(NONE)

@@ -6,49 +6,53 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:54:46 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/24 17:20:40 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/25 16:27:01 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
 
-void	destroy_forks(t_mutex *forks, t_philo *philo)
+void	destroy_forks(t_mutex *forks, t_philo *philos[MAX_PHILO])
 {
 	int	i;
 
 	i = -1;
-	while (++i < philo[0].n_philos)
+	while (++i < philos[0]->data->n_philos)
 		pthread_mutex_destroy(&forks[i]);
 }
 
-void	destroy_all(char *str, t_mutex *forks, t_philo *philo)
+void	destroy_all(char *str, t_mutex *forks, t_philo *philos[MAX_PHILO], t_data *data)
 {
 	int	i;
 
 	i = -1;
 	if (str)
 		ft_putstr_fd(str, 2);
-	while (++i < philo->n_philos)
+	if (pthread_mutex_destroy(&data->death) != 0
+		|| pthread_mutex_destroy(&data->print) != 0)
 	{
-		// pthread_mutex_unlock(philo[i].death);
-		pthread_mutex_destroy(philo[i].death);
-		// pthread_mutex_unlock(philo[i].print);
-		pthread_mutex_destroy(philo[i].print);
-		// pthread_mutex_unlock(philo[i].eating);
-		pthread_mutex_destroy(philo[i].eating);
+		write(2, "Failed to destroy mutex\n", 25);
 	}
-	destroy_forks(forks, philo);
+	while (++i < data->n_philos)
+	{
+		if (pthread_mutex_destroy(&philos[i]->eating)!= 0)
+		{
+			write(2, "Failed to destroy mutex\n", 25);
+			return ;
+		}
+	}
+	destroy_forks(forks, philos);
 }
 
 void	print_message(char *str, t_philo *philo, int id)
 {
 	size_t	real_time;
 
-	pthread_mutex_lock(philo->print);
+	pthread_mutex_lock(&philo->data->print);
 	real_time = get_real_time() - philo->start_time;
-	if (philo->death_prove == 0)
+	if (philo->data->death_prove == 0)
 		printf("%zu %d %s\n", real_time, id, str);
-	pthread_mutex_unlock(philo->print);
+	pthread_mutex_unlock(&philo->data->print);
 }
 
 size_t	get_real_time(void)

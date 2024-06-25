@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 10:00:11 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/24 17:10:12 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/25 16:21:27 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	check_args(char **argv)
 
 int	main(int argc, char **argv)
 {
-	t_philo	philo[MAX_PHILO];
+	t_philo	*philos[MAX_PHILO];
 	t_mutex	forks[MAX_PHILO];
 	t_data	data;
 
@@ -52,9 +52,10 @@ int	main(int argc, char **argv)
 		if (check_args(argv) == 1)
 			return (1);
 		init_forks(forks, argv);
-		init_philos(philo, forks, argv, &data);
-		create_philos(philo, forks);
-		destroy_all(NULL, forks, philo);
+		init_philos(philos, forks, argv, &data);
+		create_philos(philos, forks, &data);
+		destroy_all(NULL, forks, philos, &data);
+		//TODO free philos
 	}
 	else
 		return (write(2, "Invalid number of arguments\n", 29), 0);

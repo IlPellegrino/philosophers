@@ -1,209 +1,202 @@
-==1610816== Helgrind, a thread error detector
-==1610816== Copyright (C) 2007-2017, and GNU GPL'd, by OpenWorks LLP et al.
-==1610816== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==1610816== Command: ./philo 1 800 200 200
-==1610816== 
-==1610816== ---Thread-Announcement------------------------------------------
-==1610816== 
-==1610816== Thread #3 was created
-==1610816==    at 0x49AC342: clone (clone.S:71)
-==1610816==    by 0x48712EB: create_thread (createthread.c:101)
-==1610816==    by 0x4872E0F: pthread_create@@GLIBC_2.2.5 (pthread_create.c:817)
-==1610816==    by 0x4842917: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x401E0A: create_philos (routine.c:49)
-==1610816==    by 0x4014AB: main (philo.c:56)
-==1610816== 
-==1610816== ---Thread-Announcement------------------------------------------
-==1610816== 
-==1610816== Thread #2 was created
-==1610816==    at 0x49AC342: clone (clone.S:71)
-==1610816==    by 0x48712EB: create_thread (createthread.c:101)
-==1610816==    by 0x4872E0F: pthread_create@@GLIBC_2.2.5 (pthread_create.c:817)
-==1610816==    by 0x4842917: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x401D91: create_philos (routine.c:46)
-==1610816==    by 0x4014AB: main (philo.c:56)
-==1610816== 
-==1610816== ----------------------------------------------------------------
-==1610816== 
-==1610816== Possible data race during read of size 4 at 0x1FFEFEF3F0 by thread #3
-==1610816== Locks held: none
-==1610816==    at 0x4874FF9: pthread_mutex_lock (pthread_mutex_lock.c:81)
-==1610816==    by 0x483FE78: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x401C6B: check_death (routine.c:17)
-==1610816==    by 0x401D02: philo_routine (routine.c:30)
-==1610816==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x4872608: start_thread (pthread_create.c:477)
-==1610816==    by 0x49AC352: clone (clone.S:95)
-==1610816== 
-==1610816== This conflicts with a previous write of size 4 by thread #2
-==1610816== Locks held: none
-==1610816==    at 0x48767D1: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:52)
-==1610816==    by 0x48767D1: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
-==1610816==    by 0x4840458: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x4017D8: is_dead (check_death_and_meal.c:36)
-==1610816==    by 0x40185C: monitor (check_death_and_meal.c:60)
-==1610816==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x4872608: start_thread (pthread_create.c:477)
-==1610816==    by 0x49AC352: clone (clone.S:95)
-==1610816==  Address 0x1ffefef3f0 is on thread #1's stack
-==1610816==  in frame #3, created by main (philo.c:45)
-==1610816== 
-==1610816== ----------------------------------------------------------------
-==1610816== 
-==1610816== Possible data race during write of size 4 at 0x1FFEFEF3F0 by thread #3
-==1610816== Locks held: none
-==1610816==    at 0x487500C: pthread_mutex_lock (pthread_mutex_lock.c:159)
-==1610816==    by 0x483FE78: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x401C6B: check_death (routine.c:17)
-==1610816==    by 0x401D02: philo_routine (routine.c:30)
-==1610816==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x4872608: start_thread (pthread_create.c:477)
-==1610816==    by 0x49AC352: clone (clone.S:95)
-==1610816== 
-==1610816== This conflicts with a previous write of size 4 by thread #2
-==1610816== Locks held: none
-==1610816==    at 0x48767D1: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:52)
-==1610816==    by 0x48767D1: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
-==1610816==    by 0x4840458: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x4017D8: is_dead (check_death_and_meal.c:36)
-==1610816==    by 0x40185C: monitor (check_death_and_meal.c:60)
-==1610816==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x4872608: start_thread (pthread_create.c:477)
-==1610816==    by 0x49AC352: clone (clone.S:95)
-==1610816==  Address 0x1ffefef3f0 is on thread #1's stack
-==1610816==  in frame #3, created by main (philo.c:45)
-==1610816== 
-==1610816== ----------------------------------------------------------------
-==1610816== 
-==1610816== Possible data race during read of size 4 at 0x1FFEFEF3F4 by thread #3
-==1610816== Locks held: none
-==1610816==    at 0x487500F: pthread_mutex_lock (pthread_mutex_lock.c:161)
-==1610816==    by 0x483FE78: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x401C6B: check_death (routine.c:17)
-==1610816==    by 0x401D02: philo_routine (routine.c:30)
-==1610816==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x4872608: start_thread (pthread_create.c:477)
-==1610816==    by 0x49AC352: clone (clone.S:95)
-==1610816== 
-==1610816== This conflicts with a previous write of size 4 by thread #2
-==1610816== Locks held: none
-==1610816==    at 0x48767CB: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:55)
-==1610816==    by 0x48767CB: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
-==1610816==    by 0x4840458: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x4017D8: is_dead (check_death_and_meal.c:36)
-==1610816==    by 0x40185C: monitor (check_death_and_meal.c:60)
-==1610816==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x4872608: start_thread (pthread_create.c:477)
-==1610816==    by 0x49AC352: clone (clone.S:95)
-==1610816==  Address 0x1ffefef3f4 is on thread #1's stack
-==1610816==  in frame #3, created by main (philo.c:45)
-==1610816== 
-==1610816== ----------------------------------------------------------------
-==1610816== 
-==1610816== Possible data race during write of size 4 at 0x1FFEFEF3F4 by thread #3
-==1610816== Locks held: none
-==1610816==    at 0x487500F: pthread_mutex_lock (pthread_mutex_lock.c:161)
-==1610816==    by 0x483FE78: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x401C6B: check_death (routine.c:17)
-==1610816==    by 0x401D02: philo_routine (routine.c:30)
-==1610816==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x4872608: start_thread (pthread_create.c:477)
-==1610816==    by 0x49AC352: clone (clone.S:95)
-==1610816== 
-==1610816== This conflicts with a previous write of size 4 by thread #2
-==1610816== Locks held: none
-==1610816==    at 0x48767CB: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:55)
-==1610816==    by 0x48767CB: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
-==1610816==    by 0x4840458: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x4017D8: is_dead (check_death_and_meal.c:36)
-==1610816==    by 0x40185C: monitor (check_death_and_meal.c:60)
-==1610816==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x4872608: start_thread (pthread_create.c:477)
-==1610816==    by 0x49AC352: clone (clone.S:95)
-==1610816==  Address 0x1ffefef3f4 is on thread #1's stack
-==1610816==  in frame #3, created by main (philo.c:45)
-==1610816== 
-==1610816== ----------------------------------------------------------------
-==1610816== 
-==1610816== Possible data race during read of size 4 at 0x1FFEFEF3F4 by thread #3
-==1610816== Locks held: none
-==1610816==    at 0x48767CB: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:55)
-==1610816==    by 0x48767CB: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
-==1610816==    by 0x4840458: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x401C89: check_death (routine.c:19)
-==1610816==    by 0x401D02: philo_routine (routine.c:30)
-==1610816==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x4872608: start_thread (pthread_create.c:477)
-==1610816==    by 0x49AC352: clone (clone.S:95)
-==1610816== 
-==1610816== This conflicts with a previous write of size 4 by thread #2
-==1610816== Locks held: none
-==1610816==    at 0x48767CB: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:55)
-==1610816==    by 0x48767CB: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
-==1610816==    by 0x4840458: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x4017D8: is_dead (check_death_and_meal.c:36)
-==1610816==    by 0x40185C: monitor (check_death_and_meal.c:60)
-==1610816==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x4872608: start_thread (pthread_create.c:477)
-==1610816==    by 0x49AC352: clone (clone.S:95)
-==1610816==  Address 0x1ffefef3f4 is on thread #1's stack
-==1610816==  in frame #3, created by main (philo.c:45)
-==1610816== 
-==1610816== ----------------------------------------------------------------
-==1610816== 
-==1610816== Possible data race during write of size 4 at 0x1FFEFEF3F4 by thread #3
-==1610816== Locks held: none
-==1610816==    at 0x48767CB: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:55)
-==1610816==    by 0x48767CB: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
-==1610816==    by 0x4840458: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x401C89: check_death (routine.c:19)
-==1610816==    by 0x401D02: philo_routine (routine.c:30)
-==1610816==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x4872608: start_thread (pthread_create.c:477)
-==1610816==    by 0x49AC352: clone (clone.S:95)
-==1610816== 
-==1610816== This conflicts with a previous write of size 4 by thread #2
-==1610816== Locks held: none
-==1610816==    at 0x48767CB: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:55)
-==1610816==    by 0x48767CB: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
-==1610816==    by 0x4840458: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x4017D8: is_dead (check_death_and_meal.c:36)
-==1610816==    by 0x40185C: monitor (check_death_and_meal.c:60)
-==1610816==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x4872608: start_thread (pthread_create.c:477)
-==1610816==    by 0x49AC352: clone (clone.S:95)
-==1610816==  Address 0x1ffefef3f4 is on thread #1's stack
-==1610816==  in frame #3, created by main (philo.c:45)
-==1610816== 
-==1610816== ----------------------------------------------------------------
-==1610816== 
-==1610816== Possible data race during write of size 4 at 0x1FFEFEF3F0 by thread #3
-==1610816== Locks held: none
-==1610816==    at 0x48767D1: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:52)
-==1610816==    by 0x48767D1: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
-==1610816==    by 0x4840458: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x401C89: check_death (routine.c:19)
-==1610816==    by 0x401D02: philo_routine (routine.c:30)
-==1610816==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x4872608: start_thread (pthread_create.c:477)
-==1610816==    by 0x49AC352: clone (clone.S:95)
-==1610816== 
-==1610816== This conflicts with a previous write of size 4 by thread #2
-==1610816== Locks held: none
-==1610816==    at 0x48767D1: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:52)
-==1610816==    by 0x48767D1: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
-==1610816==    by 0x4840458: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x4017D8: is_dead (check_death_and_meal.c:36)
-==1610816==    by 0x40185C: monitor (check_death_and_meal.c:60)
-==1610816==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
-==1610816==    by 0x4872608: start_thread (pthread_create.c:477)
-==1610816==    by 0x49AC352: clone (clone.S:95)
-==1610816==  Address 0x1ffefef3f0 is on thread #1's stack
-==1610816==  in frame #3, created by main (philo.c:45)
-==1610816== 
-799 1 died
-==1610816== 
-==1610816== Use --history-level=approx or =none to gain increased speed, at
-==1610816== the cost of reduced accuracy of conflicting-access information
-==1610816== For lists of detected and suppressed errors, rerun with: -s
-==1610816== ERROR SUMMARY: 7 errors from 7 contexts (suppressed: 0 from 0)
+==1529731== Helgrind, a thread error detector
+==1529731== Copyright (C) 2007-2017, and GNU GPL'd, by OpenWorks LLP et al.
+==1529731== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==1529731== Command: ./philo 10 800 200 200
+==1529731== 
+==1529731== ---Thread-Announcement------------------------------------------
+==1529731== 
+==1529731== Thread #3 was created
+==1529731==    at 0x49AC342: clone (clone.S:71)
+==1529731==    by 0x48712EB: create_thread (createthread.c:101)
+==1529731==    by 0x4872E0F: pthread_create@@GLIBC_2.2.5 (pthread_create.c:817)
+==1529731==    by 0x4842917: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x401DEC: create_philos (routine.c:46)
+==1529731==    by 0x4014C2: main (philo.c:56)
+==1529731== 
+==1529731== ---Thread-Announcement------------------------------------------
+==1529731== 
+==1529731== Thread #2 was created
+==1529731==    at 0x49AC342: clone (clone.S:71)
+==1529731==    by 0x48712EB: create_thread (createthread.c:101)
+==1529731==    by 0x4872E0F: pthread_create@@GLIBC_2.2.5 (pthread_create.c:817)
+==1529731==    by 0x4842917: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x401D7F: create_philos (routine.c:43)
+==1529731==    by 0x4014C2: main (philo.c:56)
+==1529731== 
+==1529731== ----------------------------------------------------------------
+==1529731== 
+==1529731== Possible data race during read of size 4 at 0x1FFEFFC208 by thread #3
+==1529731== Locks held: none
+==1529731==    at 0x4874FF9: pthread_mutex_lock (pthread_mutex_lock.c:81)
+==1529731==    by 0x483FE78: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x401CCD: philo_routine (routine.c:24)
+==1529731==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x4872608: start_thread (pthread_create.c:477)
+==1529731==    by 0x49AC352: clone (clone.S:95)
+==1529731== 
+==1529731== This conflicts with a previous write of size 4 by thread #2
+==1529731== Locks held: none
+==1529731==    at 0x48767D1: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:52)
+==1529731==    by 0x48767D1: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
+==1529731==    by 0x4840458: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x401801: is_dead (check_death_and_meal.c:38)
+==1529731==    by 0x401884: monitor (check_death_and_meal.c:62)
+==1529731==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x4872608: start_thread (pthread_create.c:477)
+==1529731==    by 0x49AC352: clone (clone.S:95)
+==1529731==  Address 0x1ffeffc208 is on thread #1's stack
+==1529731==  in frame #3, created by main (philo.c:45)
+==1529731== 
+==1529731== ----------------------------------------------------------------
+==1529731== 
+==1529731== Possible data race during write of size 4 at 0x1FFEFFC208 by thread #3
+==1529731== Locks held: none
+==1529731==    at 0x487500C: pthread_mutex_lock (pthread_mutex_lock.c:159)
+==1529731==    by 0x483FE78: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x401CCD: philo_routine (routine.c:24)
+==1529731==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x4872608: start_thread (pthread_create.c:477)
+==1529731==    by 0x49AC352: clone (clone.S:95)
+==1529731== 
+==1529731== This conflicts with a previous write of size 4 by thread #2
+==1529731== Locks held: none
+==1529731==    at 0x48767D1: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:52)
+==1529731==    by 0x48767D1: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
+==1529731==    by 0x4840458: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x401801: is_dead (check_death_and_meal.c:38)
+==1529731==    by 0x401884: monitor (check_death_and_meal.c:62)
+==1529731==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x4872608: start_thread (pthread_create.c:477)
+==1529731==    by 0x49AC352: clone (clone.S:95)
+==1529731==  Address 0x1ffeffc208 is on thread #1's stack
+==1529731==  in frame #3, created by main (philo.c:45)
+==1529731== 
+==1529731== ----------------------------------------------------------------
+==1529731== 
+==1529731== Possible data race during read of size 4 at 0x1FFEFFC20C by thread #3
+==1529731== Locks held: none
+==1529731==    at 0x487500F: pthread_mutex_lock (pthread_mutex_lock.c:161)
+==1529731==    by 0x483FE78: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x401CCD: philo_routine (routine.c:24)
+==1529731==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x4872608: start_thread (pthread_create.c:477)
+==1529731==    by 0x49AC352: clone (clone.S:95)
+==1529731== 
+==1529731== This conflicts with a previous write of size 4 by thread #2
+==1529731== Locks held: none
+==1529731==    at 0x48767CB: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:55)
+==1529731==    by 0x48767CB: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
+==1529731==    by 0x4840458: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x401801: is_dead (check_death_and_meal.c:38)
+==1529731==    by 0x401884: monitor (check_death_and_meal.c:62)
+==1529731==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x4872608: start_thread (pthread_create.c:477)
+==1529731==    by 0x49AC352: clone (clone.S:95)
+==1529731==  Address 0x1ffeffc20c is on thread #1's stack
+==1529731==  in frame #3, created by main (philo.c:45)
+==1529731== 
+==1529731== ----------------------------------------------------------------
+==1529731== 
+==1529731== Possible data race during write of size 4 at 0x1FFEFFC20C by thread #3
+==1529731== Locks held: none
+==1529731==    at 0x487500F: pthread_mutex_lock (pthread_mutex_lock.c:161)
+==1529731==    by 0x483FE78: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x401CCD: philo_routine (routine.c:24)
+==1529731==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x4872608: start_thread (pthread_create.c:477)
+==1529731==    by 0x49AC352: clone (clone.S:95)
+==1529731== 
+==1529731== This conflicts with a previous write of size 4 by thread #2
+==1529731== Locks held: none
+==1529731==    at 0x48767CB: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:55)
+==1529731==    by 0x48767CB: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
+==1529731==    by 0x4840458: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x401801: is_dead (check_death_and_meal.c:38)
+==1529731==    by 0x401884: monitor (check_death_and_meal.c:62)
+==1529731==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x4872608: start_thread (pthread_create.c:477)
+==1529731==    by 0x49AC352: clone (clone.S:95)
+==1529731==  Address 0x1ffeffc20c is on thread #1's stack
+==1529731==  in frame #3, created by main (philo.c:45)
+==1529731== 
+==1529731== ----------------------------------------------------------------
+==1529731== 
+==1529731== Possible data race during read of size 4 at 0x1FFEFFC20C by thread #3
+==1529731== Locks held: none
+==1529731==    at 0x48767CB: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:55)
+==1529731==    by 0x48767CB: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
+==1529731==    by 0x4840458: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x401D2E: philo_routine (routine.c:32)
+==1529731==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x4872608: start_thread (pthread_create.c:477)
+==1529731==    by 0x49AC352: clone (clone.S:95)
+==1529731== 
+==1529731== This conflicts with a previous write of size 4 by thread #2
+==1529731== Locks held: none
+==1529731==    at 0x48767CB: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:55)
+==1529731==    by 0x48767CB: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
+==1529731==    by 0x4840458: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x401801: is_dead (check_death_and_meal.c:38)
+==1529731==    by 0x401884: monitor (check_death_and_meal.c:62)
+==1529731==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x4872608: start_thread (pthread_create.c:477)
+==1529731==    by 0x49AC352: clone (clone.S:95)
+==1529731==  Address 0x1ffeffc20c is on thread #1's stack
+==1529731==  in frame #3, created by main (philo.c:45)
+==1529731== 
+==1529731== ----------------------------------------------------------------
+==1529731== 
+==1529731== Possible data race during write of size 4 at 0x1FFEFFC20C by thread #3
+==1529731== Locks held: none
+==1529731==    at 0x48767CB: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:55)
+==1529731==    by 0x48767CB: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
+==1529731==    by 0x4840458: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x401D2E: philo_routine (routine.c:32)
+==1529731==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x4872608: start_thread (pthread_create.c:477)
+==1529731==    by 0x49AC352: clone (clone.S:95)
+==1529731== 
+==1529731== This conflicts with a previous write of size 4 by thread #2
+==1529731== Locks held: none
+==1529731==    at 0x48767CB: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:55)
+==1529731==    by 0x48767CB: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
+==1529731==    by 0x4840458: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x401801: is_dead (check_death_and_meal.c:38)
+==1529731==    by 0x401884: monitor (check_death_and_meal.c:62)
+==1529731==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x4872608: start_thread (pthread_create.c:477)
+==1529731==    by 0x49AC352: clone (clone.S:95)
+==1529731==  Address 0x1ffeffc20c is on thread #1's stack
+==1529731==  in frame #3, created by main (philo.c:45)
+==1529731== 
+==1529731== ----------------------------------------------------------------
+==1529731== 
+==1529731== Possible data race during write of size 4 at 0x1FFEFFC208 by thread #3
+==1529731== Locks held: none
+==1529731==    at 0x48767D1: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:52)
+==1529731==    by 0x48767D1: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
+==1529731==    by 0x4840458: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x401D2E: philo_routine (routine.c:32)
+==1529731==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x4872608: start_thread (pthread_create.c:477)
+==1529731==    by 0x49AC352: clone (clone.S:95)
+==1529731== 
+==1529731== This conflicts with a previous write of size 4 by thread #2
+==1529731== Locks held: none
+==1529731==    at 0x48767D1: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:52)
+==1529731==    by 0x48767D1: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
+==1529731==    by 0x4840458: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x401801: is_dead (check_death_and_meal.c:38)
+==1529731==    by 0x401884: monitor (check_death_and_meal.c:62)
+==1529731==    by 0x4842B1A: ??? (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_helgrind-amd64-linux.so)
+==1529731==    by 0x4872608: start_thread (pthread_create.c:477)
+==1529731==    by 0x49AC352: clone (clone.S:95)
+==1529731==  Address 0x1ffeffc208 is on thread #1's stack
+==1529731==  in frame #3, created by main (philo.c:45)
+==1529731== 
+800 1 died
+==1529731== 
+==1529731== Use --history-level=approx or =none to gain increased speed, at
+==1529731== the cost of reduced accuracy of conflicting-access information
+==1529731== For lists of detected and suppressed errors, rerun with: -s
+==1529731== ERROR SUMMARY: 70 errors from 7 contexts (suppressed: 0 from 0)
