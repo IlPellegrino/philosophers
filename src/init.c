@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 14:54:28 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/25 16:26:35 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/28 10:44:53 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,47 +37,58 @@ void	init_data(t_data *data, char **argv)
 {
 	times_init(data, argv);
 	data->death_prove = 0;
-	if (pthread_mutex_init(&data->death, NULL) != 0
-		|| pthread_mutex_init(&data->print, NULL) != 0)
+	pthread_mutex_init(&data->death, NULL);
+	if (pthread_mutex_init(&data->print, NULL) != 0)
 	{
 		write(2, "Failed to create mutex\n", 24);
 		return ;
 	}
-}
-
-void	init_philos(t_philo *philos[MAX_PHILO], t_mutex *forks, char **argv, t_data *data)
-{
-	int	i;
-	int n_philos = ft_atoi(argv[1]);
-
-	i = -1;
-	init_data(data, argv);
-	while (++i < n_philos)
+	data->philos = ft_calloc(data->n_philos, sizeof(t_philo));
+	if (!data->philos)
 	{
-		philos[i] = (t_philo *)malloc(sizeof(t_philo));
-		//TODO check malloc
-		philos[i]->data = data;
-		philos[i]->id = i + 1;
-		philos[i]->meals_eaten = 0;
-		philos[i]->is_eating = 0;
-		philos[i]->last_meal = get_real_time();
-		philos[i]->start_time = get_real_time();
-		init_mutex(philos[i]);
-		philos[i]->sx_fork = forks[i];
-		if (i == 0)
-			philos[i]->dx_fork = forks[n_philos - 1];
-		else
-			philos[i]->dx_fork = forks[i - 1];
+		write(2, "Structure allocation failed\n", 29);
+		return ;
 	}
 }
 
-int	init_forks(t_mutex *forks, char **argv)
+void	init_philos(char **argv, t_data *data)
+{
+	int	i;
+	int	n_philos;
+
+	i = -1;
+	n_philos = ft_atoi(argv[1]);
+	while (++i < n_philos)
+	{
+		data->philos[i].data = data;
+		data->philos[i].id = i + 1;
+		data->philos[i].meals_eaten = 0;
+		data->philos[i].last_meal = get_real_time();
+		init_mutex(&data->philos[i]);
+		if (i == 0)
+		{
+			data->philos[i].dx_fork = &data->forks[n_philos - 1];
+			data->philos[i].sx_fork = &data->forks[i];
+		}
+		else
+		{
+			data->philos[i].dx_fork = &data->forks[i - 1];
+			data->philos[i].sx_fork = &data->forks[i];
+		}
+	}
+	data->start_time = get_real_time();
+}
+
+int	init_forks(t_data *data)
 {
 	int	i;
 
 	i = -1;
-	while (++i < ft_atoi(argv[1]))
-		if (pthread_mutex_init(&forks[i], NULL) != 0)
+	data->forks = malloc(data->n_philos * sizeof(t_mutex));
+	while (++i < data->n_philos)
+	{
+		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
 			return (write (2, "Mutex creation failed\n", 23), 0);
+	}
 	return (1);
 }

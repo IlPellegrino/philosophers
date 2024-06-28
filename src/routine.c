@@ -6,7 +6,7 @@
 /*   By: nromito <nromito@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 11:36:02 by nromito           #+#    #+#             */
-/*   Updated: 2024/06/25 16:31:48 by nromito          ###   ########.fr       */
+/*   Updated: 2024/06/28 10:46:55 by nromito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,35 +21,29 @@ void	*philo_routine(void *pointer)
 		usleep(200);
 	while (1)
 	{
-		pthread_mutex_lock(&philo->data->death);
-		if (philo->data->death_prove)
-			break ;
-		pthread_mutex_unlock(&philo->data->death);
 		eat(philo);
 		dream(philo);
 		think(philo);
+		if (is_finished(philo))
+			break ;
 	}
-	pthread_mutex_unlock(&philo->data->death);
 	return (pointer);
 }
 
-void	create_philos(t_philo *philos[MAX_PHILO], t_mutex *forks, t_data *data)
+void	create_philos(t_data *data)
 {
-	int			i;
-	pthread_t	ref;
-	int n_philos = data->n_philos;
+	int	i;
+	int	n_philos;
 
 	i = -1;
-	if (pthread_create(&ref, NULL, &monitor, philos) != 0)
-		destroy_all("Thread creation failed\n", forks, philos, data);
+	n_philos = data->n_philos;
 	while (++i < n_philos)
-		if (pthread_create(&philos[i]->thread_id, NULL, &philo_routine,
-			philos[i]) != 0)
-			destroy_all("Thread creation failed\n", forks, philos, data);
+		if (pthread_create(&data->philos[i].thread_id, NULL, &philo_routine,
+				&data->philos[i]) != 0)
+			destroy_all("Thread creation failed\n", data);
 	i = -1;
-	if (pthread_join(ref, NULL) != 0)
-		destroy_all("Join thread failed\n", forks, philos, data);
+	monitor(data);
 	while (++i < n_philos)
-		if (pthread_join(philos[i]->thread_id, NULL) != 0)
-			destroy_all("Join thread failed\n", forks, philos, data);
+		if (pthread_join(data->philos[i].thread_id, NULL) != 0)
+			destroy_all("Join thread failed\n", data);
 }
